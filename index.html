@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/html" ng-app="app">
+<head lang="en">
+  <meta charset="utf-8">
+  <title update-title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="web/css/fontawesome.min.css">
+  <link rel="stylesheet" href="web/css/bootstrap.min.css">
+  <link rel="stylesheet" href="web/css/bootstrap-xl.css">
+  <link rel="stylesheet" href="web/css/bootstrap-xxl.css">
+  <link rel='stylesheet' href='web/css/loading-bar.min.css' type='text/css' media='all'/>
+  <link rel="stylesheet" href="web/css/main.css">
+  <base href="/">
+</head>
+<body class="theme-dark">
+  <header>
+    <nav class="navbar navbar-custom">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">Miner-Monitor</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ui-sref-active="active"><a ui-sref="stats">Stats</a></li>
+            <li ui-sref-active="active"><a ui-sref="generalConfig">General Config</a></li>
+            <li ui-sref-active="active"><a ui-sref="dashboardConfig">Dashboard Config</a></li>
+            <li ui-sref-active="active"><a ui-sref="deviceConfig">Device Config</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="mycontainer">
+      <div ui-view></div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container-fluid">
+      <span class="copyright">Alpha</span>
+    </div>
+  </footer>
+  <script src="web/js/jquery.min.js"></script>
+  <script src="web/js/bootstrap.min.js"></script>
+  <script src="web/js/angular.min.js"></script>
+  <script src="web/js/angular-ui-router.min.js"></script>
+  <script src="web/js/angular-filter.min.js"></script>
+  <script src='web/js/loading-bar.min.js'></script>
+  <script src='web/js/imagesloaded.pkgd.min.js'></script>
+  <script src='web/js/masonry.pkgd.min.js'></script>
+  <script src="web/js/angular-masonry.min.js"></script>
+  <script src="web/js/moment.min.js"></script>
+  <script src="web/js/app/app.js"></script>
+  <script src="web/js/app/controllers/statsCtrl.js"></script>
+  <script src="web/js/app/controllers/configCtrl.js"></script>
+  <script src="web/js/app/components/balances/bitcoinBalance.js"></script>
+  <script src="web/js/app/components/balances/cryptoidBalance.js"></script>
+  <script src="web/js/app/components/balances/counterpartyBalance.js"></script>
+  <script src="web/js/app/components/balances/ethereumBalance.js"></script>
+  <script src="web/js/app/components/balances/bitmartBalance.js"></script>
+  <script src="web/js/app/components/balances/nicehashBalance.js"></script>
+  <script src="web/js/app/components/custom/dashboardApi.js"></script>
+  <script src="web/js/app/components/custom/colab-manager-stats-collection.js"></script>
+  <script src="web/js/app/components/custom/hdpool-control.js"></script>
+  <script src="web/js/app/components/pools/nicehash.js"></script>
+  <script src="web/js/app/components/pools/miningpoolhub.js"></script>
+  <script src="web/js/app/components/pools/mpos.js"></script>
+  <script src="web/js/app/components/pools/yiimp.js"></script>
+  <script src="web/js/app/components/pools/hdpool.js"></script>
+  <script src="web/js/app/components/pools/hpool.js"></script>
+  <script src="web/js/app/components/pools/foxy-pool.js"></script>
+  <script src="web/js/app/components/pools/nodeCryptonotePools.js"></script>
+  <script src="web/js/app/components/miner/minerManager.js"></script>
+  <script src="web/js/app/components/miner/creepMiner.js"></script>
+  <script src="web/js/app/components/miner/burstProxy.js"></script>
+  <script src="web/js/app/components/miner/storj.js"></script>
+  <script src="web/js/app/components/miner/chia-plotter.js"></script>
+  <script src="web/js/app/components/miner/chia-miner.js"></script>
+  <script src="web/js/app/components/miner/chia-farmer.js"></script>
+  <script src="web/js/app/components/miner/chia-archiver.js"></script>
+  <script src="web/js/app/components/miner/rclone.js"></script>
+  <script src="web/js/app/components/wallets/wallet.js"></script>
+  <script src="web/js/app/components/balances/balance-summary.js"></script>
+</body>
+</html>
