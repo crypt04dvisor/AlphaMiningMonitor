@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-12">
+        <div style="float: left;font-size:120%;">CreepMiner</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-condensed">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Block #</th>
+                <th>Elapsed</th>
+                <th>Best DL</th>
+                <th>DL's submitted</th>
+                <th>Plot size</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="entry in $ctrl.entries track by $index">
+                <td>{{entry.name}}</td>
+                <td><span data-toggle="tooltip" title="difficulty: {{entry.stats.difficulty}}" data-placement="bottom">{{entry.stats.block}}</span></td>
+                <td>{{$ctrl.getTimeElapsedSinceLastBlock(entry.stats.blockStart)}}</td>
+                <td>{{$ctrl.getBestDeadlineString(entry.stats.bestDL)}}</td>
+                <td>
+                  <span data-toggle="tooltip" title="DL's below 10 minutes / DL's submitted / total historical DL count" data-placement="bottom">
+                    {{entry.stats.dlBelowTenMinutes}} / {{entry.stats.roundsSubmitted}} / {{entry.stats.numHistoricals}}
+                  </span>
+                  <span data-toggle="tooltip" title="DL's submitted in percent" data-placement="bottom">
+                    ({{((entry.stats.roundsSubmitted/entry.stats.numHistoricals) * 100).toFixed(2)}}%)
+                  </span>
+                </td>
+                <td><span data-toggle="tooltip" title="Block found every {{$ctrl.getTimeTillFoundBlock(entry.stats.timeToFindBlockInSeconds)}}" data-placement="bottom">{{entry.stats.totalPlotSize || 0}}</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
