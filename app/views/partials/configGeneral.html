@@ -1,0 +1,99 @@
+<div class="centerAlign">
+  <div class="panel panel-default col-md-10 col-md-offset-1">
+    <div class="panel-body">
+      <form name="config">
+        <div class="row" style="margin-bottom: 10px;">
+          <div class="col-md-12 centerAlign" style="margin-bottom: 10px;">
+            <span style="font-size:120%;">Serverside:</span>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px;">
+          <div  class="col-md-12">
+            default miner stats collection interval: <input type="number" ng-model="configVm.config.interval"> [s]
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px;">
+          <div  class="col-md-5">
+            SMTP hostname: <input type="text" ng-model="configVm.config.mailConfig.host">
+          </div>
+          <div  class="col-md-5">
+            SMTP port: <input type="number" ng-model="configVm.config.mailConfig.port">
+          </div>
+          <div  class="col-md-2">
+            TLS: <input type="checkbox" ng-model="configVm.config.mailConfig.secure">
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px;">
+          <div  class="col-md-5">
+            user: <input type="text" ng-model="configVm.config.mailConfig.auth.user" placeholder="sender.email@domain.tld">
+          </div>
+          <div  class="col-md-5">
+            pass: <input type="password" ng-model="configVm.config.mailConfig.auth.pass">
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px;">
+          <div  class="col-md-12">
+            <button ng-show="!configVm.waitingVerify" type="button" class="btn btn-primary" ng-click="configVm.verifyTransport()">Verify Connection
+            </button>
+            <button ng-show="configVm.waitingVerify" type="button" class="btn btn-primary" disabled>verifying..
+            </button>
+            <i ng-show="configVm.waitingVerify" class="fa fa-cog fa-spin fa-lg fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+            <i ng-show="configVm.verifySuccess===true" class="far fa-check-circle fa-lg" aria-hidden="true" style="color:green"></i>
+            <i ng-show="configVm.verifySuccess===false" class="far fa-times-circle fa-lg" aria-hidden="true" style="color:red"></i>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px;">
+          <div  class="col-md-12">
+            Mail to: <input type="text" ng-model="configVm.config.mailTo" placeholder="your.email@domain.tld">
+          </div>
+        </div>
+      </form>
+
+
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-12">
+          <button ng-show="!configVm.waiting" type="button" class="btn btn-primary" ng-click="configVm.setConfig()" ng-disabled="config.$invalid"><i class="fa fa-save" aria-hidden="true"></i> Save
+          </button>
+          <button ng-show="configVm.waiting" type="button" class="btn btn-success" disabled><i class="fa fa-sync" aria-hidden="true"></i> Saving..
+          </button>
+          <i ng-show="configVm.waiting" class="fa fa-cog fa-spin fa-lg fa-fw"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-12">
+          <button ng-show="!configVm.updating" type="button" class="btn btn-info" ng-click="configVm.update()"><i class="fa fa-cloud-download-alt" aria-hidden="true"></i> Git Pull
+          </button>
+          <button ng-show="configVm.updating" type="button" class="btn btn-success" disabled><i class="fa fa-sync" aria-hidden="true"></i> update running..
+          </button>
+          <i ng-show="configVm.updating" class="fa fa-cog fa-spin fa-lg fa-fw"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default col-md-4 col-md-offset-4">
+    <div class="panel-body">
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-12 centerAlign" style="margin-bottom: 10px;">
+          <span style="font-size:120%;">Clientside:</span>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 10px;">
+        <div  class="col-md-12">
+          stats refresh interval: <input type="number" ng-model="configVm.localStorage.refreshInterval"> [s]
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-primary" ng-click="configVm.setLocalStorage()"><i class="fa fa-save" aria-hidden="true"></i> Save to LocalStorage
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
