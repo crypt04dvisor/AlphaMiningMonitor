@@ -1,0 +1,63 @@
+<div>
+    <div class="row">
+      <div class="col-md-12">
+        <div style="float: left;font-size:120%;">
+          Foxy-Pools
+        </div>
+      </div>
+    </div>
+    <table class="table table-bordered table-condensed leftAlign">
+        <thead>
+        <tr>
+            <th>Coin</th>
+            <th>Pending</th>
+            <th>Pledged</th>
+            <th>Deadlines</th>
+            <th>EC</th>
+            <th>Capacity</th>
+            <th>Last Payout</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="(id, pool) in $ctrl.pools track by $index">
+          <td>
+            <span class="dot" ng-class="{
+            negative: pool.data.miner.online === 0,
+            intermediary: pool.data.miner.online === 2,
+            positive: pool.data.miner.online === 1,
+            investor: pool.data.miner.online === 3
+            }"></span>
+            <a href="https://{{pool.data.coin.toLowerCase()}}.foxypool.io" target="_blank">{{pool.data.coin}}</a>
+          </td>
+          <td>
+            <span data-toggle="tooltip" title="{{(pool.data.miner.pendingFiat | customnumber: 2) || 'unknown'}} €" data-placement="bottom">
+                {{pool.data.miner.pending.toFixed(4)}} {{pool.data.coin}}
+            </span>
+          </td>
+          <td>
+            <span data-toggle="tooltip" title="{{(pool.data.miner.pledgeFiat | customnumber: 2) || 'unknown'}} €" data-placement="bottom">
+                 {{pool.data.miner.pledge ? pool.data.miner.pledge.toFixed(2) + ' ' + pool.data.coin : 'N/A'}}
+            </span>
+          </td>
+          <td>
+            {{pool.data.miner.deadlineCount ? pool.data.miner.deadlineCount : 'N/A'}}
+          </td>
+          <td>
+            {{$ctrl.getFormattedCapacity((pool.data.miner.ec || 0) * 1024)}}
+          </td>
+          <td>
+            {{$ctrl.getFormattedCapacity(pool.data.miner.reportedCapacity)}}
+          </td>
+          <td ng-if="pool.data.lastPayout" class="ellipsis">
+            {{pool.data.lastPayout.date}}
+            <span data-toggle="tooltip" title="{{(pool.data.lastPayout.amountFiat | customnumber: 2) || 'unknown'}} €" data-placement="bottom">
+                 ({{$ctrl.getFormattedAmount(pool.data.lastPayout.amount) |customnumber:4}} {{pool.data.coin}})
+            </span>
+          </td>
+          <td ng-if="!pool.data.lastPayout">
+            N/A
+          </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
