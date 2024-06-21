@@ -1,0 +1,76 @@
+<div>
+    <div class="centerAlign">HDPool Control Stats:</div>
+    <table class="table table-bordered table-condensed leftAlign">
+        <thead>
+        <tr>
+            <th>Miner</th>
+            <th>
+                <span data-toggle="tooltip" title="Current unconfirmed balance for the day" data-placement="bottom">
+                  Unconfirmed
+                </span>
+            </th>
+            <th>Balance</th>
+            <th>
+              <span data-toggle="tooltip" title="Credited in the last 24h" data-placement="bottom">
+                Credited 24h
+              </span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="(id, account) in $ctrl.dashboard.data track by $index">
+            <td>
+              <span class="dot" ng-class="{
+              'waiting-for-login': $ctrl.getState(account.stats, account.state) === 0,
+              'logging-in': $ctrl.getState(account.stats, account.state) === 1,
+              negative: $ctrl.getState(account.stats, account.state) === 3,
+              intermediary: $ctrl.getState(account.stats, account.state) === 4,
+              positive: $ctrl.getState(account.stats, account.state) === 5
+              }"></span>
+              <span>{{account.stats.onlineCapacityString || 'N/A'}}<span ng-if="account.stats.realCapacity"> ({{((account.stats.onlineCapacity / account.stats.realCapacity) * 100).toFixed(2)}}%)</span></span>
+              <div ng-if="account.stats.miners" style="font-size:small; margin-left: 4px; margin-top: -16px">
+                <span ng-repeat="miner in account.stats.miners">
+                  <br/>
+                  <span class="dot" ng-class="{negative: !miner.online, intermediary: !miner.submitting, positive: miner.online}"></span>
+                  {{miner.name}}: {{miner.capacityString}}
+                </span>
+              </div>
+            </td>
+            <td class='ellipsis'>
+                <span data-toggle="tooltip" title="{{((account.stats.expectedProfitFiat || 0) | customnumber: 2) || 'unknown'}} € | round ends in about {{$ctrl.timeTillRoundFinished(account.stats.currentRoundEndDate)}}" data-placement="bottom">
+                    {{(account.stats.expectedProfit || 0).toFixed(6)}} BHD ({{$ctrl.timeTillRoundFinishedInHours(account.stats.currentRoundEndDate)}}h)
+                </span>
+            </td>
+            <td class='ellipsis'>
+                  <span data-toggle="tooltip" title="{{((account.stats.balanceFiat || 0) | customnumber: 2) || 'unknown'}} €" data-placement="bottom">
+                      {{(account.stats.balance || 0).toFixed(6)}} BHD
+                      <span ng-if="account.stats.expectedProfitLastRound" style="font-size: small" data-toggle="tooltip" title="{{((account.stats.expectedProfitLastRoundFiat || 0) | customnumber: 2) || 'unknown'}} € | balance updates in {{$ctrl.timeTillRoundFinished(account.stats.nextBalanceUpdateDate)}}" data-placement="bottom">
+                        <br>
+                        + {{account.stats.expectedProfitLastRound.toFixed(6)}} BHD
+                      </span>
+                  </span>
+            </td>
+            <td class='ellipsis'>
+                <span data-toggle="tooltip" title="{{((account.stats.incomeLastDayFiat || 0) | customnumber: 2) || 'unknown'}} €" data-placement="bottom">
+                    {{(account.stats.incomeLastDay || 0).toFixed(6)}} BHD
+                </span>
+            </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex; justify-content: space-between">
+              <span>
+                <strong>Total</strong>
+              </span>
+              <span style="margin-right: 4px">
+                <strong>{{$ctrl.capacityToString($ctrl.getTotal('onlineCapacity'))}}</strong>
+              </span>
+            </div>
+          </td>
+          <td><strong>{{$ctrl.getTotal('expectedProfit').toFixed(6)}} BHD<br>{{$ctrl.getTotal('expectedProfitFiat') | customnumber: 2}} €</strong></td>
+          <td><strong>{{($ctrl.getTotal('balance') + $ctrl.getTotal('expectedProfitLastRound')).toFixed(6)}} BHD<br>{{($ctrl.getTotal('balanceFiat') + $ctrl.getTotal('expectedProfitLastRoundFiat')) | customnumber: 2}} €</strong></td>
+          <td><strong>{{$ctrl.getTotal('incomeLastDay').toFixed(6)}} BHD<br>{{$ctrl.getTotal('incomeLastDayFiat') | customnumber: 2}} €</strong></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
