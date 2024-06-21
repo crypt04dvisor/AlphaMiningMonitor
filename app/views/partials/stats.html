@@ -1,0 +1,107 @@
+<div masonry masonry-options="{ columnWidth: 1 }">
+    <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-3 masonry-brick" ng-if="statsVm.isDashboardTypeEnabled('bitcoinBalance')">
+        <bitcoin-balance dashboards="statsVm.balances.bitcoin"></bitcoin-balance>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-3 masonry-brick" ng-if="statsVm.isDashboardTypeEnabled('cryptoidBalance')">
+        <cryptoid-balance dashboards="statsVm.balances.cryptoid"></cryptoid-balance>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-3 masonry-brick" ng-if="statsVm.isDashboardTypeEnabled('counterpartyBalance')">
+        <counterparty-balance dashboards="statsVm.balances.counterparty"></counterparty-balance>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-3 masonry-brick" ng-if="statsVm.isDashboardTypeEnabled('bitmart-balance')">
+      <bitmart-balance dashboards="statsVm.balances.bitmart"></bitmart-balance>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-3 masonry-brick" ng-if="statsVm.isDashboardTypeEnabled('nicehashBalance')">
+        <nicehash-balance dashboards="statsVm.balances.nicehash"></nicehash-balance>
+    </div>
+
+    <div class="masonry-brick col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-3" ng-if="statsVm.dashboards.balances.length > 0">
+      <balance-summary dashboards="statsVm.dashboards.balances"></balance-summary>
+    </div>
+
+    <div class="masonry-brick col-sm-8 col-md-8 col-lg-5 col-xl-4 col-xxl-5" ng-if="statsVm.isDashboardTypesEnabled(['generic-wallet', 'bitbean-wallet', 'bhd-wallet', 'disc-wallet', 'wallet-agent', 'burst-wallet', 'boom-wallet'])">
+        <wallet dashboards="statsVm.dashboards.wallets"></wallet>
+    </div>
+
+    <div class="masonry-brick col-sm-8 col-md-8 col-lg-6 col-xl-4 col-xxl-6" ng-repeat="(id, dashboard) in statsVm.custom.dashboardApi track by $index">
+        <dashboard-api dashboard="dashboard"></dashboard-api>
+    </div>
+
+    <div class="masonry-brick col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-7" ng-repeat="(id, dashboard) in statsVm.dashboards.nicehash track by $index">
+        <nicehash dashboard="dashboard"></nicehash>
+    </div>
+    <div class="masonry-brick col-sm-12 col-md-12 col-lg-8 col-xl-6 col-xxl-8" ng-repeat="(id, dashboard) in statsVm.dashboards.mph track by $index">
+        <miningpoolhub dashboard="dashboard"></miningpoolhub>
+    </div>
+    <div class="masonry-brick col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-7" ng-if="statsVm.isDashboardTypeEnabled('genericMPOS')">
+        <mpos dashboards="statsVm.dashboards.mpos"></mpos>
+    </div>
+
+    <div class="masonry-brick col-sm-12 col-md-12 col-lg-8 col-xl-6 col-xxl-8" ng-if="statsVm.isDashboardTypeEnabled('node-cryptonote-pool') || statsVm.isDashboardTypeEnabled('snipa-nodejs-pool')">
+        <node-cryptonote-pools dashboards="statsVm.dashboards.nodeCryptonotePools"></node-cryptonote-pools>
+    </div>
+
+    <div class="masonry-brick col-sm-12 col-md-12 col-lg-8 col-xl-6 col-xxl-8" ng-if="statsVm.isDashboardTypeEnabled('yiimp')">
+        <yiimp dashboards="statsVm.dashboards.yiimp"></yiimp>
+    </div>
+
+    <div class="masonry-brick col-sm-9 col-md-6 col-lg-6 col-xl-4 col-xxl-6" ng-if="statsVm.isDashboardTypeEnabled('hdpool')">
+      <hdpool dashboards="statsVm.dashboards.hdpool"></hdpool>
+    </div>
+
+    <span ng-repeat="(id, dashboard) in statsVm.dashboards.hdpoolControl track by $index">
+        <div class="masonry-brick col-sm-9 col-md-6 col-lg-6 col-xl-4 col-xxl-6">
+          <hdpool-control dashboard="dashboard"></hdpool-control>
+        </div>
+    </span>
+
+    <div class="masonry-brick col-sm-9 col-md-6 col-lg-6 col-xl-4 col-xxl-6" ng-if="statsVm.isDashboardTypeEnabled('hpool')">
+      <hpool dashboards="statsVm.dashboards.hpool"></hpool>
+    </div>
+
+    <div class="masonry-brick col-sm-9 col-md-6 col-lg-6 col-xl-4 col-xxl-6" ng-if="statsVm.isDeviceTypeEnabled('creep-miner')">
+      <creep-miner entries="statsVm.creepMiner"></creep-miner>
+    </div>
+
+    <div class="masonry-brick col-sm-9 col-md-6 col-lg-6 col-xl-4 col-xxl-6" ng-if="statsVm.isDeviceTypeEnabled('burst-proxy')">
+      <burst-proxy upstreams="statsVm.burstProxies"></burst-proxy>
+    </div>
+
+    <div class="masonry-brick col-sm-12 col-md-8 col-lg-8 col-xl-5 col-xxl-8" ng-if="statsVm.isDeviceTypeEnabled('storj')">
+      <storj nodes="statsVm.storjNodes"></storj>
+    </div>
+
+    <div class="masonry-brick col-sm-12 col-md-8 col-lg-8 col-xl-5 col-xxl-8" ng-if="statsVm.isDashboardTypeEnabled('foxy-pool') || statsVm.isDashboardTypeEnabled('foxy-pool-v2')">
+      <foxy-pool pools="statsVm.dashboards.foxyPools"></foxy-pool>
+    </div>
+
+    <div class="masonry-brick col-sm-12 col-md-8 col-lg-8 col-xl-5 col-xxl-8" ng-if="statsVm.isDeviceTypeEnabled('chia-plotter')">
+      <chia-plotter plot-jobs="statsVm.chiaPlotterPlotJobs"></chia-plotter>
+    </div>
+
+    <div class="masonry-brick col-sm-12 col-md-12 col-lg-8 col-xl-6 col-xxl-8" ng-if="statsVm.isDeviceTypeEnabled('chia-miner')">
+      <chia-miner miners="statsVm.chiaMiners"></chia-miner>
+    </div>
+
+    <div class="masonry-brick col-sm-12 col-md-8 col-lg-8 col-xl-5 col-xxl-8" ng-repeat="(id, dashboard) in statsVm.custom.colabManagerStatsCollections track by $index">
+      <colab-manager-stats-collection dashboard="dashboard"></colab-manager-stats-collection>
+    </div>
+
+    <div class="masonry-brick col-sm-12 col-md-8 col-lg-8 col-xl-5 col-xxl-8" ng-if="statsVm.isDeviceTypeEnabled('rclone')">
+      <rclone rclones="statsVm.rclones"></rclone>
+    </div>
+
+    <span ng-repeat="(id, entry) in statsVm.devices track by $index">
+        <div class="masonry-brick col-sm-9 col-md-6 col-lg-6 col-xl-4 col-xxl-6" ng-if="entry.type === 'miner-agent'">
+            <miner-manager entry="entry"></miner-manager>
+        </div>
+
+        <div class="masonry-brick col-sm-9 col-md-6 col-lg-6 col-xl-4 col-xxl-6" ng-if="entry.type === 'chia-farmer'">
+            <chia-farmer farmer="entry"></chia-farmer>
+        </div>
+
+        <div class="masonry-brick col-sm-12 col-md-8 col-lg-8 col-xl-5 col-xxl-8" ng-if="entry.type === 'chia-archiver'">
+            <chia-archiver archiver="entry"></chia-archiver>
+        </div>
+    </span>
+</div>
