@@ -1,0 +1,168 @@
+<div class="centerAlign">Wallets:</div>
+<table class="table table-bordered table-condensed leftAlign">
+    <thead>
+    <tr>
+        <th>Wallet</th>
+        <th><span data-toggle="tooltip" title="Status" data-placement="bottom">S</span></th>
+        <th>Balance</th>
+        <th>Unconfirmed</th>
+        <th>Total</th>
+        <th><span data-toggle="tooltip" title="Connections" data-placement="bottom">Conn</span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="(id, dashboard) in $ctrl.dashboards track by $index">
+        <td>{{dashboard.name}}</td>
+
+        <!-- generic wallet -->
+        <td ng-if="(dashboard.type === 'generic-wallet' || dashboard.type === 'cryptonight-wallet' || dashboard.type === 'disc-wallet' || dashboard.type === 'burst-wallet' || dashboard.type === 'chia-wallet') &&
+        dashboard.data &&
+        !$ctrl.isEmpty(dashboard.data) &&
+        $ctrl.isSynced(dashboard.data)" >
+            <span data-toggle="tooltip" title="online & synced"><i
+                    class="far fa-check-circle" aria-hidden="true" style="color:green"></i>
+            </span>
+        </td>
+        <td style="min-width: 43px;" ng-if="(dashboard.type === 'generic-wallet' || dashboard.type === 'cryptonight-wallet' || dashboard.type === 'disc-wallet' || dashboard.type === 'burst-wallet' || dashboard.type === 'chia-wallet') &&
+        dashboard.data &&
+        !$ctrl.isEmpty(dashboard.data) &&
+        $ctrl.isSyncing(dashboard.data)" >
+            <span data-toggle="tooltip" title="online & syncing: {{dashboard.data.syncProgress * 100 | number:2}}%">
+                <i class="fa fa-sync fa-spin" aria-hidden="true" style="color:orange"></i>
+                <div class="progress sync-progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="{{dashboard.data.syncProgress * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{dashboard.data.syncProgress * 100}}%;"></div>
+                </div>
+            </span>
+        </td>
+        <td ng-if="(dashboard.type === 'generic-wallet' || dashboard.type === 'cryptonight-wallet' || dashboard.type === 'disc-wallet' || dashboard.type === 'burst-wallet') &&
+        dashboard.data &&
+        !$ctrl.isEmpty(dashboard.data) &&
+        !($ctrl.isSyncing(dashboard.data)) &&
+        $ctrl.isOutdated(dashboard.data)" >
+            <span data-toggle="tooltip" title="online, last block {{$ctrl.getLastBlockAgo(dashboard.data)}}"><i
+                    class="fa fa-exclamation-triangle " aria-hidden="true" style="color:red"></i>
+            </span>
+        </td>
+        <td ng-if="(dashboard.type === 'generic-wallet' || dashboard.type === 'cryptonight-wallet' || dashboard.type === 'disc-wallet' || dashboard.type === 'burst-wallet' || dashboard.type === 'chia-wallet') && (!dashboard.data || $ctrl.isEmpty(dashboard.data))">
+            <span data-toggle="tooltip" title="offline"><i
+                    class="far fa-stop-circle" aria-hidden="true" style="color:red"></i>
+            </span>
+        </td>
+
+        <!-- bhd wallet -->
+        <td ng-if="(dashboard.type === 'bhd-wallet' || dashboard.type === 'boom-wallet') &&
+          dashboard.data &&
+          !$ctrl.isEmpty(dashboard.data) &&
+          $ctrl.isSynced(dashboard.data) &&
+          $ctrl.isPledgeSufficient(dashboard.data)" >
+              <span data-toggle="tooltip" title="online, synced & sufficient pledge"><i
+                class="far fa-check-circle" aria-hidden="true" style="color:green"></i>
+              </span>
+        </td>
+        <td ng-if="(dashboard.type === 'bhd-wallet' || dashboard.type === 'boom-wallet') &&
+          dashboard.data &&
+          !$ctrl.isEmpty(dashboard.data) &&
+          $ctrl.isSynced(dashboard.data) &&
+          !$ctrl.isPledgeSufficient(dashboard.data)" >
+              <span data-toggle="tooltip" title="online & synced but insufficient pledge
+required pledge: {{dashboard.data.pledgeAmount.toFixed(0)}} {{dashboard.ticker}} | estimated capacity: {{dashboard.data.pledgeCapacity}}"><i
+                class="fa fa-exclamation-circle" aria-hidden="true" style="color:orange"></i>
+              </span>
+        </td>
+        <td style="min-width: 43px;" ng-if="(dashboard.type === 'bhd-wallet' || dashboard.type === 'boom-wallet') &&
+          dashboard.data &&
+          !$ctrl.isEmpty(dashboard.data) &&
+          $ctrl.isSyncing(dashboard.data)">
+              <span data-toggle="tooltip" title="online & syncing: {{dashboard.data.syncProgress * 100 | number:2}}%">
+                  <i class="fa fa-sync fa-spin" aria-hidden="true" style="color:orange"></i>
+                  <div class="progress sync-progress">
+                      <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="{{dashboard.data.syncProgress * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{dashboard.data.syncProgress * 100}}%;"></div>
+                  </div>
+              </span>
+        </td>
+        <td ng-if="(dashboard.type === 'bhd-wallet' || dashboard.type === 'boom-wallet') &&
+          dashboard.data &&
+          !$ctrl.isEmpty(dashboard.data) &&
+          !($ctrl.isSyncing(dashboard.data)) &&
+          $ctrl.isOutdated(dashboard.data)" >
+              <span data-toggle="tooltip" title="online, last block {{$ctrl.getLastBlockAgo(dashboard.data)}}"><i
+                class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red"></i>
+              </span>
+        </td>
+        <td ng-if="dashboard.type === 'bhd-wallet' && (!dashboard.data || $ctrl.isEmpty(dashboard.data))">
+              <span data-toggle="tooltip" title="offline"><i
+                class="far fa-stop-circle" aria-hidden="true" style="color:red"></i>
+              </span>
+        </td>
+
+        <!-- bitbean wallet -->
+        <td ng-if="dashboard.type === 'bitbean-wallet' && dashboard.data && !$ctrl.isEmpty(dashboard.data) && dashboard.data.sprouting && $ctrl.isSynced(dashboard.data)" >
+            <span data-toggle="tooltip" title="online, synced & sprouting, interval: {{dashboard.data.sproutingInterval}}"><i
+                    class="far fa-check-circle" aria-hidden="true" style="color:green"></i>
+            </span>
+        </td>
+        <td style="min-width: 43px;" ng-if="dashboard.type === 'bitbean-wallet' &&
+        dashboard.data &&
+        !$ctrl.isEmpty(dashboard.data) &&
+        dashboard.data.sprouting &&
+        $ctrl.isSyncing(dashboard.data)" >
+            <span data-toggle="tooltip" title="online, sprouting & syncing: {{dashboard.data.syncProgress * 100 | number:2}}%">
+                <i class="fa fa-sync fa-spin" aria-hidden="true" style="color:orange"></i>
+                <div class="progress sync-progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="{{dashboard.data.syncProgress * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{dashboard.data.syncProgress * 100}}%;"></div>
+                </div>
+            </span>
+        </td>
+        <td ng-if="dashboard.type === 'bitbean-wallet' &&
+        dashboard.data &&
+        !$ctrl.isEmpty(dashboard.data) &&
+        dashboard.data.sprouting &&
+        !($ctrl.isSyncing(dashboard.data)) &&
+        $ctrl.isOutdated(dashboard.data)" >
+            <span data-toggle="tooltip" title="online & sprouting but last block {{$ctrl.getLastBlockAgo(dashboard.data)}}"><i
+                    class="fa fa-exclamation-triangle " aria-hidden="true" style="color:red"></i>
+            </span>
+        </td>
+        <td ng-if="dashboard.type === 'bitbean-wallet' && dashboard.data && !$ctrl.isEmpty(dashboard.data) && !dashboard.data.sprouting">
+            <span data-toggle="tooltip" title="online but not sprouting"><i
+                    class="far fa-stop-circle" aria-hidden="true" style="color:red"></i>
+            </span>
+        </td>
+        <td ng-if="dashboard.type === 'bitbean-wallet' && (!dashboard.data || $ctrl.isEmpty(dashboard.data))">
+            <span data-toggle="tooltip" title="offline"><i
+                    class="far fa-stop-circle" aria-hidden="true" style="color:red"></i>
+            </span>
+        </td>
+
+        <td class='ellipsis' ng-if="dashboard.data && !$ctrl.isEmpty(dashboard.data)">
+            <span data-toggle="tooltip" title="{{(dashboard.data.balanceFiat | customnumber: 2) || 'unknown'}} €" data-placement="bottom">
+                {{dashboard.data.balance | customnumber:6}} {{dashboard.ticker}}
+            </span>
+        </td>
+        <td ng-if="!dashboard.data || $ctrl.isEmpty(dashboard.data)">N/A</td>
+
+        <td ng-if="dashboard.data.unconfirmed !== undefined" class='ellipsis'>
+            <span data-toggle="tooltip" title="{{(dashboard.data.unconfirmedFiat | customnumber: 2) || 'unknown'}} €" data-placement="bottom">
+                {{dashboard.data.unconfirmed | customnumber:6}} {{dashboard.ticker}}
+            </span>
+        </td>
+        <td ng-if="dashboard.data.unconfirmed === undefined">N/A</td>
+
+        <td class='ellipsis' ng-if="dashboard.data && !$ctrl.isEmpty(dashboard.data)">
+            <span data-toggle="tooltip" title="{{(dashboard.data.totalFiat | customnumber: 2) || 'unknown'}} €" data-placement="bottom">
+                {{dashboard.data.total | customnumber:6}} {{dashboard.ticker}}
+            </span>
+        </td>
+        <td ng-if="!dashboard.data || $ctrl.isEmpty(dashboard.data)">N/A</td>
+
+        <td ng-if="dashboard.data && !$ctrl.isEmpty(dashboard.data)">{{dashboard.data.connections !== undefined ? dashboard.data.connections : 'N/A'}}</td>
+        <td ng-if="!dashboard.data || $ctrl.isEmpty(dashboard.data)">N/A</td>
+    </tr>
+    <tr>
+        <td colspan="2"><strong>Total</strong></td>
+        <td><strong>{{$ctrl.getFiatTotal('balance') | customnumber: 2}} €</strong></td>
+        <td><strong>{{$ctrl.getFiatTotal('unconfirmed') | customnumber: 2}} €</strong></td>
+        <td colspan="2"><strong>{{$ctrl.getFiatTotal('total') | customnumber: 2}} €</strong></td>
+    </tr>
+    </tbody>
+</table>
